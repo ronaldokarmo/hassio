@@ -12,7 +12,7 @@ Este tutorial ensina, passo a passo, como instalar o sistema operacional necess�
 * Leitor de cartão SD (caso utilize SD)
 * Computador com Windows/Linux
 * Acesso à internet
-* Balena Etcher instalado ([https://etcher.io](https://etcher.io))
+* Balena Etcher instalado ([link](https://etcher.io))
 
 ---
 
@@ -192,7 +192,7 @@ users
 | **IP do Orange Pi 5**                  | `192.168.15.15`                                                                                                     |
 | **Usuário padrão SSH**                 | `orangepi` ou `root`                                                                                                |
 | **Imagem do sistema**                  | `Orangepi5_1.2.0_debian_bullseye_server_linux5.10.160.img`                                                          |
-| **Link da imagem**                     | [Baixar imagem](https://gist.github.com/renatoccosta/c30f0b4216c8caaf1f202b0a0561b5d3?permalink_comment_id=4577454) |
+| **Link da imagem**                     | [Baixar imagem](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-pi-5.html) |
 | **Comando para verificar hash**        | `certUtil -hashfile "CAMINHO\DA\IMAGEM.img" SHA256` (no PowerShell)                                                 |
 | **Usuário do Home Assistant (Docker)** | `homeassistant`                                                                                                     |
 | **UUID do disco**                      | Identificado via `sudo blkid`                                                                                       |
@@ -270,9 +270,10 @@ extraargs=apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=false sy
 curl -fsSL https://get.casaos.io | sudo bash
 ```
 
-Acesse:
+Acesse **Orangepi 5** nos linsks abaixo:
 
-* [http://192.168.15.101:4357/](http://192.168.15.101:4357/)
+* [http://orangepi5.local:8080/](http://orangepi5.local:8080/)
+* [http://orangepi5.local:4357/](http://orangepi5.local:4357/)
 * [http://orangepi5.local:8123/](http://orangepi5.local:8123/)
 
 > 💡 **Dica:** Você pode instalar `rclone` se precisar:
@@ -341,6 +342,7 @@ Agora seu Orange Pi 5 está preparado com o **Home Assistant**, **CasaOS**, **Pi
 * [CasaOS](https://casaos.io/)
 * [Pi-hole](https://pi-hole.net/)
 * [PiVPN](https://pivpn.io/)
+* [Doc Installing Home Assistant on OrangePi 5 Board](https://gist.github.com/renatoccosta/c30f0b4216c8caaf1f202b0a0561b5d3?permalink_comment_id=4583001)
 
 ---
 

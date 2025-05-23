@@ -26,7 +26,7 @@ Este tutorial ensina, passo a passo, como instalar o sistema operacional necess�
 certUtil -hashfile "C:\Users\USER\Downloads\Orangepi5_1.2.0_debian_bullseye_server_linux5.10.160.img" SHA256
 ```
 
-3. **Grave a imagem no cartão SD ou HD/SSD usando o Balena Etcher.**
+3. **Grave a imagem no cartão SD ou HD/SSD usando o Balena Etcher**:
 
 > 💡 **Dica:** Verifique se o dispositivo está corretamente selecionado no Balena Etcher para evitar sobrescrever dados importantes.
 
@@ -41,14 +41,14 @@ ssh orangepi@192.168.15.15
 sudo su -
 ```
 
-### Atualize o sistema:
+### Atualize o sistema
 
 ```bash
 apt update && apt upgrade -y
 lsb_release -a
 ```
 
-### Faça o upgrade do Debian 11 (Bullseye) para o Debian 12 (Bookworm):
+### Faça o upgrade do Debian 11 (Bullseye) para o Debian 12 (Bookworm)
 
 ```bash
 sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
@@ -83,7 +83,7 @@ cgroup_enable=memory
 cgroup_memory=1
 ```
 
-### Instale o "equivs" e crie pacote para systemd-resolved:
+### Instale o "equivs" e crie pacote para systemd-resolved
 
 ```bash
 sudo apt install equivs
@@ -97,7 +97,7 @@ equivs-build systemd-resolved.control
 sudo dpkg -i systemd-resolved_1.0_all.deb
 ```
 
-### Atualize o boot:
+### Atualize o boot
 
 ```bash
 echo "extraargs=apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=false systemd.legacy_systemd_cgroup_controller=false" >> /boot/orangepiEnv.txt
@@ -114,7 +114,7 @@ sudo su -
 curl -fsSL get.docker.com | sh
 ```
 
-### Instale os agentes necessários:
+### Instale os agentes necessários
 
 ```bash
 wget https://github.com/home-assistant/os-agent/releases/download/1.7.2/os-agent_1.7.2_linux_aarch64.deb
@@ -125,7 +125,7 @@ dpkg -i homeassistant-supervised.deb
 apt --fix-broken install
 ```
 
-### Reinicie o supervisor (se necessário):
+### Reinicie o supervisor (se necessário)
 
 ```bash
 ha supervisor restart
@@ -163,24 +163,103 @@ Vídeos de referência:
 
 ## 🧑‍💻 Acesso e configuração do sistema
 
-### Acesso via SSH:
+### Acesso via SSH
 
 ```bash
 ssh root@192.168.15.15
 ssh orangepi@192.168.15.15
 ```
 
-### Alterar senha:
+### Alterar senha
 
 ```bash
 passwd
 passwd orangepi
 ```
 
-### Listar usuários:
+### Listar usuários
 
 ```bash
 users
+```
+
+---
+
+### 📌 Tabela de Referência: Paths, Usuários e IPs
+
+| **Item**                               | **Valor/Exemplo**                                                                                                   |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **IP do Orange Pi 5**                  | `192.168.15.15`                                                                                                     |
+| **Usuário padrão SSH**                 | `orangepi` ou `root`                                                                                                |
+| **Imagem do sistema**                  | `Orangepi5_1.2.0_debian_bullseye_server_linux5.10.160.img`                                                          |
+| **Link da imagem**                     | [Baixar imagem](https://gist.github.com/renatoccosta/c30f0b4216c8caaf1f202b0a0561b5d3?permalink_comment_id=4577454) |
+| **Comando para verificar hash**        | `certUtil -hashfile "CAMINHO\DA\IMAGEM.img" SHA256` (no PowerShell)                                                 |
+| **Usuário do Home Assistant (Docker)** | `homeassistant`                                                                                                     |
+| **UUID do disco**                      | Identificado via `sudo blkid`                                                                                       |
+| **Comando para boot via USB**          | `sudo dd if=/usr/lib/linux-u-boot-current-orangepi5_1.1.8_arm64/u-boot.itb of=/dev/sda bs=1024 seek=8`              |
+| **Endereço do CasaOS**                 | `http://192.168.15.101:4357/` ou `http://orangepi5.local:8123/`                                                     |
+| **Comando de backup do InfluxDB**      | `influxd backup -portable <path-to-backup>`                                                                         |
+| **Comando de consulta InfluxDB**       | `influx -database homeassistant -execute "SELECT \"value\" FROM ...`                                                |
+
+Perfeito! Com base na versão mais recente do seu tutorial, aqui estão algumas sugestões de melhoria e correções:
+
+---
+
+### ✅ Sugestões de melhoria
+
+#### 1. Versão da imagem está desatualizada no tutorial
+
+* A imagem usada no tutorial é a `Orangepi5_1.2.0_debian_bullseye_server_linux5.10.160.img`.
+* Mas você está utilizando a `Orangepi5_1.1.8_debian_bookworm_server_linux5.10.160.img`.
+* 👉 **Sugestão:** Atualize a referência da imagem para refletir a versão `1.1.8` e `bookworm`, para manter coerência com o restante do guia.
+
+### 2. Atualização do sistema desnecessária
+
+* Se você já está usando a imagem Bookworm (`1.1.8`), este trecho se torna redundante:
+
+```bash
+sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
+apt update && apt full-upgrade -y
+```
+
+* 👉 **Sugestão:** Condicionalmente oriente o usuário a verificar sua versão do Debian com `lsb_release -a` antes de executar esse trecho, ou remova caso já esteja em Bookworm.
+
+**3. Comando `mkdir /boot/firmware` pode ser desnecessário**
+
+* Se `/boot/firmware/` já existe, o comando pode gerar erro.
+* 👉 **Sugestão:** Use `mkdir -p /boot/firmware` para evitar erro caso o diretório já exista.
+
+#### 4. Adicionar passo para habilitar o NetworkManager
+
+* Alguns usuários relatam que o `NetworkManager` não vem habilitado por padrão.
+* 👉 **Sugestão:** Adicione:
+
+```bash
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+```
+
+**5. Clareza na parte do `equivs`**
+
+* Instruções do `equivs` estão corretas, mas poderiam confundir iniciantes.
+* 👉 **Sugestão:** Informe o que exatamente o pacote `systemd-resolved` fictício está resolvendo (ex: dependência do Home Assistant).
+
+**6. Confusão na configuração do `/boot/orangepiEnv.txt`**
+
+* Você dá duas instruções para `extraargs`. Uma antes com `apparmor=1...` e outra depois com `cma=128M`.
+* 👉 **Sugestão:** Unifique ou esclareça que os parâmetros devem ser combinados, algo como:
+
+```bash
+extraargs=apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=false systemd.legacy_systemd_cgroup_controller=false cma=128M
+```
+
+**7. Comando do `dd` para boot USB assume que `/dev/sda` é o disco certo**
+
+* Pode causar perda de dados.
+* 👉 **Sugestão:** Adicione aviso claro antes do `dd`:
+
+```markdown
+⚠️ **Cuidado!** Confirme que `/dev/sda` é realmente o disco onde deseja instalar o bootloader. Use `lsblk` para verificar.
 ```
 
 ---
@@ -223,7 +302,7 @@ Vídeo de referência: [Instalação PiVPN](https://www.youtube.com/watch?v=ZKFN
 curl -sSL https://install.pi-hole.net | bash
 ```
 
-### Alterar senha de acesso:
+### Alterar senha de acesso
 
 ```bash
 sudo pihole -a -p
@@ -233,14 +312,14 @@ sudo pihole -a -p
 
 ## 📊 Backup e Acesso ao InfluxDB
 
-### Executar comandos:
+### Executar comandos
 
 ```bash
 docker exec -it <container_id> /bin/bash
 influxd backup -portable <path-to-backup>
 ```
 
-### Consultas InfluxDB:
+### Consultas InfluxDB
 
 ```bash
 influx -database homeassistant -execute "SELECT \"value\" FROM \"homeassistant\".\"autogen\".\"kWh\" WHERE \"entity_id\"='energy_meter_energia_total'" -format csv > /home/orangepi/influxdb/output.csv
@@ -267,4 +346,3 @@ Agora seu Orange Pi 5 está preparado com o **Home Assistant**, **CasaOS**, **Pi
 
 🛟 **Precisa de ajuda?**
 Deixe suas dúvidas nos comentários ou busque suporte na [comunidade oficial do Home Assistant](https://community.home-assistant.io/).
-

@@ -18,7 +18,7 @@ Este tutorial ensina, passo a passo, como instalar o sistema operacional necessÃ
 
 ## ðŸ“¥ Passo 1: Baixando e preparando o sistema
 
-1. **Baixe a imagem do sistema**: [Orangepi5\_1.2.0\_debian\_bullseye\_server\_linux5.10.160.img](https://gist.github.com/renatoccosta/c30f0b4216c8caaf1f202b0a0561b5d3?permalink_comment_id=4577454)
+1. **Baixe a imagem do sistema Operacional**: [Imagem Debian Bullseye](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-pi-5.html)
 
 2. **Verifique o hash da imagem (Windows)**:
 

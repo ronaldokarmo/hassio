@@ -44,9 +44,9 @@ sudo su -
 ### Atualize o sistema
 
 ```bash
-apt update && apt upgrade -y
+sudo apt update && apt upgrade -y
 sudo apt list --upgradable
-apt dist-upgrade -y
+sudo apt dist-upgrade -y
 lsb_release -a
 ```
 

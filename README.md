@@ -45,6 +45,8 @@ sudo su -
 
 ```bash
 apt update && apt upgrade -y
+sudo apt list --upgradable
+apt dist-upgrade -y
 lsb_release -a
 ```
 

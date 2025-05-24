@@ -156,6 +156,54 @@ rootfstype=ext4
 
 ---
 
+## 📂 Passo 5: Diretório principal do Home Assistant
+
+O diretório de dados do Home Assistant (onde ficam o `configuration.yaml`, `secrets.yaml`, banco de dados `home-assistant_v2.db`, entre outros) geralmente será:
+
+```
+/usr/share/hassio/homeassistant/
+```
+
+Ou, de forma simbólica:
+
+```
+/root/haos/homeassistant/
+```
+
+Você também pode verificar o caminho exato executando:
+
+```bash
+ha info
+```
+
+---
+
+### 📦 Containers Docker
+
+Os containers do Home Assistant (como `homeassistant`, `hassio_supervisor`, `hassio_dns`, etc.) serão gerenciados pelo Docker e podem ser listados com:
+
+```bash
+docker ps
+```
+
+---
+
+### 📁 Outros diretórios importantes
+
+* **Add-ons e dados do supervisor**:
+
+  ```
+  /usr/share/hassio/
+  ```
+
+* **Logs e cache**:
+
+  ```
+  /var/lib/docker/volumes/
+  ```
+
+---
+
 ## 🧭 Boot via USB (opcional)
 
 ```bash

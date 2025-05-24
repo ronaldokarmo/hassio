@@ -125,6 +125,12 @@ dpkg -i homeassistant-supervised.deb
 apt --fix-broken install
 ```
 
+> ⚠️ **NOTA:** Use este comando para instalar o Home Assistant ignorando a verificação de OS
+
+```bash
+BYPASS_OS_CHECK=true apt install ./homeassistant-supervised.deb
+```
+
 ### Reinicie o supervisor (se necessário)
 
 ```bash
@@ -132,7 +138,7 @@ ha supervisor restart
 ha jobs reset
 ```
 
-> ⚠️ **Nota:** Pode ser necessário ajustar o arquivo `/boot/orangepiEnv.txt` com os seguintes parâmetros:
+> ⚠️ **NOTA:** Pode ser necessário ajustar o arquivo `/boot/orangepiEnv.txt` com os seguintes parâmetros:
 
 ```bash
 verbosity=1
